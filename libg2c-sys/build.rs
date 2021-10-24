@@ -74,12 +74,4 @@ fn main() {
         ).unwrap()
         .write("include!(\"bindings.rs\")".as_bytes())
     );
-
-    Command::new("mv")
-    .arg("NCEPLIBS-g2c/build/libg2c.a")
-    .arg("./")
-    .spawn()
-    .expect("mv to run")
-    .wait()
-    .expect("mv to finish");
 }
