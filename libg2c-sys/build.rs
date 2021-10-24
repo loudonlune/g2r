@@ -1,6 +1,6 @@
 
 extern crate bindgen;
-use std::{fs, path::PathBuf, process::Command};
+use std::{fs::{self, File}, io::Write, path::PathBuf, process::Command};
 
 fn main() {
     if fs::metadata("NCEPLIBS-g2c").is_err() {
@@ -63,10 +63,17 @@ fn main() {
     .generate()
     .expect("Failed to generate bindgen bindings");
 
-    let out_path = PathBuf::from("src/");
+    let out_path = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     bindings
     .write_to_file(out_path.join("bindings.rs"))
     .expect("Failed to write generated g2c binding");
+
+    std::mem::drop(
+        File::create(
+            out_path.join("lib.rs")
+        ).unwrap()
+        .write("include!(\"bindings.rs\")".as_bytes())
+    );
 
     Command::new("mv")
     .arg("NCEPLIBS-g2c/build/libg2c.a")
