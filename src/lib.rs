@@ -395,11 +395,11 @@ impl Grib2Message {
     }
 
     pub fn fields(&self) -> &Vec<Grib2Field> {
-        &self.fields
+        self.fields.as_ref()
     }
 
     pub fn errors(&self) -> &Vec<(usize, Grib2Error)> {
-        &self.errors
+        self.errors.as_ref()
     }
 }
 

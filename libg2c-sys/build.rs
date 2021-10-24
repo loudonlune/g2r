@@ -1,6 +1,6 @@
 
 extern crate bindgen;
-use std::{env, fs, path::PathBuf, process::Command};
+use std::{fs, path::PathBuf, process::Command};
 
 fn main() {
     if fs::metadata("NCEPLIBS-g2c").is_err() {
