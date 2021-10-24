@@ -1,7 +1,7 @@
 
 g2r
 ==============
-g2r is currently a simple (and unfinished) binding of NCEP's g2c library for Rust. Its aim is to make the library easier to use within Rust programs.
+g2r is currently a simple (and unfinished) "safe" and rusty binding of NCEP's g2c library for Rust. Its aim is to make the library easier to use within Rust programs. It provides wrapper structs for templates used within the GRIB2 data format standard, and hopes to one day fully encapsulate most or all of the standard.
 
 What can g2r do?
 --------------
