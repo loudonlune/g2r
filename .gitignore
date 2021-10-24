@@ -1,5 +1,5 @@
 /target
 /GRIB2
 /model_data
-/libg2c-sys/NCEPLIBS-g2c
+/NCEPLIBS-g2c
 Cargo.lock

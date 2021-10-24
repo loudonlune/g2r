@@ -426,6 +426,9 @@ impl Grib2 {
         self.messages.as_ref()
     }
 
+    /*
+    This function only works with horizontal layer products.
+    */
     pub fn messages_by_layer(&self) -> HashMap<(FixedSurface, FixedSurface), Vec<Grib2Message>> {
         let mut map: HashMap<(FixedSurface, FixedSurface), Vec<Grib2Message>> = HashMap::new();
 

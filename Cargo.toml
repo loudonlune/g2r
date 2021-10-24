@@ -1,6 +1,7 @@
 [package]
 name = "g2r"
 version = "0.1.0"
+build="build.rs"
 authors = ["sauce"]
 edition = "2018"
 

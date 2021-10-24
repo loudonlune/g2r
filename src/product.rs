@@ -36,11 +36,13 @@ impl FixedSurface {
         }
     }
 
+    // a builder-like function, consumes and returns self
     pub fn with_factor(mut self, factor: u8) -> FixedSurface {
         self.sfc_scale_factor = factor;
         self
     }
 
+    // a builder-like function, consumes and returns self
     pub fn with_value(mut self, value: i64) -> FixedSurface {
         self.sfc_scale_value = value;
         self
