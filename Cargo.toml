@@ -4,6 +4,8 @@ version = "0.1.0"
 build="build.rs"
 authors = ["Adam Hassick"]
 edition = "2018"
+description="A Rust wrapper for NCEPLIBS-g2c"
+license="MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
