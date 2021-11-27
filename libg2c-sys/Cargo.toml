@@ -1,10 +1,11 @@
 [package]
 name = "libg2c-sys"
 version = "0.1.0"
-authors = ["Adam H"]
+authors = [ "Adam H" ]
 build="build.rs"
 edition = "2018"
-description="A binding of g2c for Rust"
+description="Bindgen binding for NCEPLIBS-g2c"
+license-file="LICENSE-g2c.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
