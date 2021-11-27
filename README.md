@@ -23,6 +23,11 @@ g2r = "0.1.0"
 ```
 Now you're all set to begin using the crate.
 
+Testing
+--------------
+To test, download a GRIB2 file from NOMADS here: https://nomads.ncep.noaa.gov/
+Name this file test.grib2 and move it into where you cloned this repository, and run cargo test.
+
 Example
 -------------
 Using g2r in your application is easy. Simply call the read_all() fn on your Grib2 instance, and messages will become available.
