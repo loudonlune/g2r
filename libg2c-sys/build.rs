@@ -3,8 +3,11 @@ extern crate bindgen;
 use std::{fs::{self, File}, io::Write, path::PathBuf, process::Command};
 
 fn main() {
-    if fs::metadata("NCEPLIBS-g2c").is_err() {
+    let out_path = PathBuf::from(std::env::var("OUT_DIR").unwrap());
+
+    if fs::metadata(out_path.join("NCEPLIBS-g2c")).is_err() {
         if Command::new("git")
+        .current_dir(out_path.clone())
         .arg("clone")
         .arg("https://github.com/NOAA-EMC/NCEPLIBS-g2c.git")
         .spawn()
@@ -20,7 +23,7 @@ fn main() {
 
         Command::new("rm")
         .arg("-rf")
-        .current_dir("NCEPLIBS-g2c")
+        .current_dir(out_path.clone().join("NCEPLIBS-g2c"))
         .arg("build")
         .spawn()
         .expect("Clean of build to start executing")
@@ -29,7 +32,7 @@ fn main() {
     }
 
     Command::new("mkdir")
-    .current_dir("NCEPLIBS-g2c")
+    .current_dir(out_path.clone().join("NCEPLIBS-g2c"))
     .arg("build")
     .spawn()
     .expect("mkdir to run")
@@ -37,7 +40,7 @@ fn main() {
     .expect("mkdir to complete");
 
     Command::new("cmake")
-    .current_dir("NCEPLIBS-g2c/build/")
+    .current_dir(out_path.clone().join("NCEPLIBS-g2c/build/"))
     .arg("-DUSE_Jasper=False")
     .arg("-DUSE_PNG=False")
     .arg("..")
@@ -46,28 +49,17 @@ fn main() {
     .wait()
     .expect("Cmake to finish");
 
-    if Command::new("bash")
-    .arg("./make.sh")
-    .spawn()
-    .expect("Make to run")
-    .wait()
-    .expect("Make to run")
-    .code()
-    .expect("An exit code from Make") != 0 {
-        panic!("g2c build failed")
-    }
-
     let bindings = bindgen::Builder::default()
-    .header("NCEPLIBS-g2c/build/src/grib2.h")
+    .header(out_path.clone().join("NCEPLIBS-g2c/build/src/grib2.h").as_os_str().to_str().unwrap())
     .parse_callbacks(Box::new(bindgen::CargoCallbacks))
     .generate()
     .expect("Failed to generate bindgen bindings");
 
-    let out_path = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     bindings
     .write_to_file(out_path.join("bindings.rs"))
     .expect("Failed to write generated g2c binding");
 
+    // make absolutely sure buffer is flushed & file is written
     std::mem::drop(
         File::create(
             out_path.join("lib.rs")
